@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,8 +25,15 @@ namespace EmployeeManagement
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services) //This is dependency injection container
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false); // add MVC to dependency injection container. 
+            #region Add MVC to this dependency Injection Container
+            //services.AddMvcCore(); //This only included core methods of MVC and this is subset of MVCCore.
+            services.AddMvc(options => options.EnableEndpointRouting = false); //AddMVC has all methods of MVC and it does internally call MVCCore. 
+            #endregion
+
+            //using Singleton Dependency Injection. This creates single instance (of MockEmployeeRepository, in this case) per application. 
+            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();//This invokes MockEmployeeRepository implementation for IEmployeeRepository interface.
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
