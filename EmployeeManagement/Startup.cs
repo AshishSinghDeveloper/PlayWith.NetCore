@@ -22,8 +22,9 @@ namespace EmployeeManagement
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) //This is dependency injection container
         {
+            services.AddMvc(options => options.EnableEndpointRouting = false); // add MVC to dependency injection container. 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,8 +65,9 @@ namespace EmployeeManagement
             #endregion
 
             #endregion
-
+    
             app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute(); //add mvc middleware to the reqeuest pipeline with default route which is home/index/id
 
             #region UseEndpoints code provided in 3.1 core. This is new and does not exists in 2.2 version
             //app.UseEndpoints(endpoints =>
