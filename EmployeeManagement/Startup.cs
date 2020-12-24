@@ -36,6 +36,34 @@ namespace EmployeeManagement
 
             app.UseRouting();
 
+            #region Setting default page
+
+            #region One way of setting default page for application
+            //app.UseDefaultFiles(); //This makes default.html, default.htm, index.html, or index.htm as a default page.
+
+            //If you want to have custom page as your default page then use this
+            //DefaultFilesOptions defaultFilesOption = new DefaultFilesOptions();
+            //defaultFilesOption.DefaultFileNames.Clear();
+            //defaultFilesOption.DefaultFileNames.Add("foo.html"); //adds foo.html as default page. 
+            //app.UseDefaultFiles(defaultFilesOption); //Use this defaultFileOption parameter when you want to make custom page as default page.
+
+            //app.UseStaticFiles(); //This helps to recognize and show static files like images, css, js. This should come after DefaultFileOption
+            #endregion
+
+            #region another way of setting default page for application
+            //UseFileServer() - it includes the properties of UseStaticFiles(), UseDefaultFiles(), UseDirectoryFiles() (not used here)
+            //app.UseFileServer(); //this make the default.html as default page.
+
+            //If you want to have custom page as your default page then use this
+            FileServerOptions fileServerOptions = new FileServerOptions();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");//adds foo.html as default page. 
+            app.UseFileServer(fileServerOptions);
+            #endregion
+
+            #endregion
+
+            #region UseEndpoints code provided in 3.1 core. This is new and does not exists in 2.2 version
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapGet("/", async context =>
@@ -44,6 +72,9 @@ namespace EmployeeManagement
             //        await context.Response.WriteAsync(_config["MyKey"]);
             //    });
             //});
+            #endregion
+
+            #region implementation of app.use understand Middleware pipelines. This used in 2.2 version but still works in 3.1
 
             app.Use(async (context, next) =>
             {
@@ -64,6 +95,8 @@ namespace EmployeeManagement
                 await context.Response.WriteAsync("MW3: Request handled and response produced");
                 logger.LogInformation("MW3: Request handled and response produced");
             });
+
+            #endregion
         }
     }
 }
