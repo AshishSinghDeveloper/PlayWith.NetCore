@@ -31,6 +31,8 @@ namespace EmployeeManagement
         {
             if (env.IsDevelopment())
             {
+                DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions();
+                developerExceptionPageOptions.SourceCodeLineCount = 10; // This will show 10 lines of code from the line error occured.
                 app.UseDeveloperExceptionPage();
             }
 
@@ -92,6 +94,7 @@ namespace EmployeeManagement
 
             app.Run(async (context) =>
             {
+                throw new Exception("Some error Processing the request");
                 await context.Response.WriteAsync("MW3: Request handled and response produced");
                 logger.LogInformation("MW3: Request handled and response produced");
             });
