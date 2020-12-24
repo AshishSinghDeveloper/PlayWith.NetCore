@@ -57,13 +57,15 @@ namespace EmployeeManagement
             //app.UseFileServer(); //this make the default.html as default page.
 
             //If you want to have custom page as your default page then use this
-            FileServerOptions fileServerOptions = new FileServerOptions();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");//adds foo.html as default page. 
-            app.UseFileServer(fileServerOptions);
+            //FileServerOptions fileServerOptions = new FileServerOptions();
+            //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");//adds foo.html as default page. 
+            //app.UseFileServer(fileServerOptions);
             #endregion
 
             #endregion
+
+            app.UseStaticFiles();
 
             #region UseEndpoints code provided in 3.1 core. This is new and does not exists in 2.2 version
             //app.UseEndpoints(endpoints =>
@@ -94,8 +96,9 @@ namespace EmployeeManagement
 
             app.Run(async (context) =>
             {
-                throw new Exception("Some error Processing the request");
+                //throw new Exception("Some error Processing the request");
                 await context.Response.WriteAsync("MW3: Request handled and response produced");
+                await context.Response.WriteAsync("\n Hosting environment: " + env.EnvironmentName);
                 logger.LogInformation("MW3: Request handled and response produced");
             });
 
