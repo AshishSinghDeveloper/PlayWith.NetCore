@@ -23,6 +23,11 @@ namespace EmployeeManagement.Controllers
         public ViewResult Details()
         {
             Employee model = _employeeRepository.GetEmployeeById(1);
+
+            //using ViewData
+            ViewData["Employee"] = model;
+            ViewData["Title"] = "Employee Details";
+
             return View(model);
             //return View(); // Since it has not parameter it look for Details.cstml in Home controller
             //return View("Test"); // This will look for Test.cshtml in View/Home folder.
