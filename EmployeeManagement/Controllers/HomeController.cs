@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using EmployeeManagement.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
@@ -22,17 +23,30 @@ namespace EmployeeManagement.Controllers
 
         public ViewResult Details()
         {
-            Employee model = _employeeRepository.GetEmployeeById(1);
-
-            //using ViewData
+            //implement ViewData
+            //Employee model = _employeeRepository.GetEmployeeById(1);
             //ViewData["Employee"] = model;
             //ViewData["Title"] = "Employee Details";
+            //return View(model);
 
-            //using ViewBag
-            ViewBag.PageTitle = "Employee Details";
-            ViewBag.Employee = model;
+            //implement ViewBag
+            //ViewBag.PageTitle = 
+            //Employee model = _employeeRepository.GetEmployeeById(1);"Employee Details";
+            //ViewBag.Employee = model;
+            //return View(model);
 
-            return View(model);
+            //implement strongly type model
+            //Employee model = _employeeRepository.GetEmployeeById(1);
+            //return View(model);
+
+            //implement View Model: We create a "View Model" when a Model object does not contain all the data a view needs
+            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+            {
+                Employee = _employeeRepository.GetEmployeeById(1),
+                PageTitle = "Employee Details",
+            };
+            return View(homeDetailsViewModel);
+
             //return View(); // Since it has not parameter it look for Details.cstml in Home controller
             //return View("Test"); // This will look for Test.cshtml in View/Home folder.
             //return View("../../NewFolder/newview.cshtml") // This is relative path. It was in the home folder. first it came out from home folder, then view folder which means it come to root folder. From root folder it went to New folder and then looked for newview.cshtml file.
