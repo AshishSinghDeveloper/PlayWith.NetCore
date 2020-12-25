@@ -25,8 +25,12 @@ namespace EmployeeManagement.Controllers
             Employee model = _employeeRepository.GetEmployeeById(1);
 
             //using ViewData
-            ViewData["Employee"] = model;
-            ViewData["Title"] = "Employee Details";
+            //ViewData["Employee"] = model;
+            //ViewData["Title"] = "Employee Details";
+
+            //using ViewBag
+            ViewBag.PageTitle = "Employee Details";
+            ViewBag.Employee = model;
 
             return View(model);
             //return View(); // Since it has not parameter it look for Details.cstml in Home controller
