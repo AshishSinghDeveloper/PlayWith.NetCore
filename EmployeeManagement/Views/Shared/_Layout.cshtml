@@ -15,10 +15,10 @@
 
     @*@RenderSection("Scripts", required: false) This render the "Script" (JS file). Required false makes it not not mandatory script for all views.*@
 
-    @*A way to make sure Scripts is defined (or exists) before invoking it
-    @if (IsSectionDefined("Script"))
+    @*A way to make sure Scripts is defined (or exists) before invoking it*@
+    @if (IsSectionDefined("Scripts"))
     {
         @RenderSection("Scripts")
-    }*@
+    }
 </body>
 </html>
