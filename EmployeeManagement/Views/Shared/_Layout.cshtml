@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿  <!DOCTYPE html>
 
 <html>
 <head>
@@ -9,5 +9,16 @@
     <div>
         @RenderBody()
     </div>
+    @*Including JavaScript reference here so that it could be accessed in all the pages*@
+    @*<script src="~/js/CustomScript.js"></script>*@
+
+
+    @*@RenderSection("Scripts", required: false) This render the "Script" (JS file). Required false makes it not not mandatory script for all views.*@
+
+    @*A way to make sure Scripts is defined (or exists) before invoking it
+    @if (IsSectionDefined("Script"))
+    {
+        @RenderSection("Scripts")
+    }*@
 </body>
 </html>
