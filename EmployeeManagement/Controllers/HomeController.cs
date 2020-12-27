@@ -22,6 +22,10 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
 
+        [Route("")]
+        [Route("Home")]
+        [Route("Home/Index")]
+        [Route("Home/Index/{id?}")]
         public ViewResult Details(int? id)
         {
             //implement ViewData
