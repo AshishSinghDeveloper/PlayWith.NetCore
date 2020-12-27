@@ -79,12 +79,13 @@ namespace EmployeeManagement
             //app.UseMvcWithDefaultRoute(); //add mvc middleware to the reqeuest pipeline with default route which is home/index/id
 
             //This is custom routing. Here id is optional field
-            //app.UseMvc(routes => {
+            app.UseMvc(routes =>
+            {
 
-            //    routes.MapRoute("default", "{controller=Home}/{action=Details}/{id?}");
-            //});
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
-            app.UseMvc();
+            //app.UseMvc();
 
             #region UseEndpoints code provided in 3.1 core. This is new and does not exists in 2.2 version
             //app.UseEndpoints(endpoints =>
