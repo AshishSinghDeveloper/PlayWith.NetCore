@@ -22,7 +22,7 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
 
-        public ViewResult Details()
+        public ViewResult Details(int? id)
         {
             //implement ViewData
             //Employee model = _employeeRepository.GetEmployeeById(1);
@@ -43,7 +43,7 @@ namespace EmployeeManagement.Controllers
             //implement View Model: We create a "View Model" when a Model object does not contain all the data a view needs
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                Employee = _employeeRepository.GetEmployeeById(1),
+                Employee = _employeeRepository.GetEmployeeById(id??1), //id??! means if id is not null then use id = 1
                 PageTitle = "Employee Details",
             };
             return View(homeDetailsViewModel);

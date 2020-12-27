@@ -28,6 +28,7 @@ namespace EmployeeManagement
             #region Add MVC to this dependency Injection Container
             //services.AddMvcCore(); //This only included core methods of MVC and this is subset of MVCCore.
             services.AddMvc(options => options.EnableEndpointRouting = false); //AddMVC has all methods of MVC and it does internally call MVCCore. 
+     
             #endregion
 
             //using Singleton Dependency Injection. This creates single instance (of MockEmployeeRepository, in this case) per application. 
@@ -75,7 +76,13 @@ namespace EmployeeManagement
             #endregion
     
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute(); //add mvc middleware to the reqeuest pipeline with default route which is home/index/id
+            //app.UseMvcWithDefaultRoute(); //add mvc middleware to the reqeuest pipeline with default route which is home/index/id
+
+            //This is custom routing. Here id is optional field
+            app.UseMvc(routes => {
+
+                routes.MapRoute("default", "{controller=Home}/{action=Details}/{id?}");
+            });
 
             #region UseEndpoints code provided in 3.1 core. This is new and does not exists in 2.2 version
             //app.UseEndpoints(endpoints =>
