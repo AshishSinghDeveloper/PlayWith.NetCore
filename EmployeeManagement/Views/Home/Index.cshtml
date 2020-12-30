@@ -11,7 +11,7 @@
         <div class="card-header">
             <h3>@employee.Name</h3>
         </div>
-        <img class="card-img-top" src="~/images/employee icon.png" />
+        <img class="card-img-top" src="~/images/employee icon.png" asp-append-version="true" /> //img tag helper asp-append-version makes sure that if there is new image it shows on browser. 
         <div class="card-footer text-center">
             <a asp-controller="Home" asp-action="Details" asp-all-route-id="@employee.Id" class="btn btn-primary">View</a>
             <a href="#" class="btn btn-primary">Edit</a>
