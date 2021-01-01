@@ -35,7 +35,7 @@ namespace EmployeeManagement
             #endregion
 
             //using Singleton Dependency Injection. This creates single instance (of MockEmployeeRepository, in this case) per application. 
-            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();//This invokes MockEmployeeRepository implementation for IEmployeeRepository interface.
+            services.AddScoped<IEmployeeRepository, SqlEmployeeRepository>();//This invokes MockEmployeeRepository implementation for IEmployeeRepository interface.
         }
 
 
