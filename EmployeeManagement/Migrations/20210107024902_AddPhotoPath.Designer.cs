@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210107020431_AddPhotoPath")]
+    [Migration("20210107024902_AddPhotoPath")]
     partial class AddPhotoPath
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,6 @@ namespace EmployeeManagement.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhotoPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SomeProperty")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
