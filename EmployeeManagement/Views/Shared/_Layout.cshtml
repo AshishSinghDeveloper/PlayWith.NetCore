@@ -30,6 +30,7 @@
     </environment>
     <environment include="Development">
         <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
     </environment> 
@@ -70,7 +71,7 @@
     @*A way to make sure Scripts is defined (or exists) before invoking it*@
     @if (IsSectionDefined("Scripts"))
     {
-        @RenderSection("Scripts")
+        @RenderSection("Scripts", required: false)
     }
 </body>
 </html>
