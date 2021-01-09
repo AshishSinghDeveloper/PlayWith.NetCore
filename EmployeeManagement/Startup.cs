@@ -48,6 +48,10 @@ namespace EmployeeManagement
                 developerExceptionPageOptions.SourceCodeLineCount = 10; // This will show 10 lines of code from the line error occured.
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseStatusCodePagesWithRedirects("Error/{0}");
+            }
 
             app.UseRouting();
 
@@ -103,27 +107,27 @@ namespace EmployeeManagement
 
             #region implementation of app.use understand Middleware pipelines. This used in 2.2 version but still works in 3.1
 
-            app.Use(async (context, next) =>
-            {
-                logger.LogInformation("MW1: Incoming Request");
-                await next();
-                logger.LogInformation("MW1: Outgoing Request");
-            });
+            //app.Use(async (context, next) =>
+            //{
+            //    logger.LogInformation("MW1: Incoming Request");
+            //    await next();
+            //    logger.LogInformation("MW1: Outgoing Request");
+            //});
 
-            app.Use(async (context, next) =>
-            {
-                logger.LogInformation("MW2: Incoming Request");
-                await next();
-                logger.LogInformation("MW2: Outgoing Request");
-            });
+            //app.Use(async (context, next) =>
+            //{
+            //    logger.LogInformation("MW2: Incoming Request");
+            //    await next();
+            //    logger.LogInformation("MW2: Outgoing Request");
+            //});
 
-            app.Run(async (context) =>
-            {
-                //throw new Exception("Some error Processing the request");
-                await context.Response.WriteAsync("MW3: Request handled and response produced");
-                await context.Response.WriteAsync("\n Hosting environment: " + env.EnvironmentName);
-                logger.LogInformation("MW3: Request handled and response produced");
-            });
+            //app.Run(async (context) =>
+            //{
+            //    //throw new Exception("Some error Processing the request");
+            //    await context.Response.WriteAsync("MW3: Request handled and response produced");
+            //    await context.Response.WriteAsync("\n Hosting environment: " + env.EnvironmentName);
+            //    logger.LogInformation("MW3: Request handled and response produced");
+            //});
 
             #endregion
         }
