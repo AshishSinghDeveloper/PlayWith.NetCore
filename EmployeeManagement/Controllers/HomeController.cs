@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EmployeeManagement.Models;
 using EmployeeManagement.ViewModel;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
@@ -70,16 +71,19 @@ namespace EmployeeManagement.Controllers
             {
                 string uniqueFileName = null;
 
-                if(model.Photo != null)
+                if(model.Photos != null && model.Photos.Count > 0)
                 {
-                    //webHostingEnvironment.WebRootPath give the exact path of wwwroot folder
-                    string uploadsFolder = Path.Combine(webHostingEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    foreach (IFormFile photo in model.Photos)
+                    {
+                        //webHostingEnvironment.WebRootPath give the exact path of wwwroot folder
+                        string uploadsFolder = Path.Combine(webHostingEnvironment.WebRootPath, "images");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                    // Use CopyTo() method provided by IFormFile interface to
-                    // copy the file to wwwroot/images folder
-                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                        // Use CopyTo() method provided by IFormFile interface to
+                        // copy the file to wwwroot/images folder
+                        photo.CopyTo(new FileStream(filePath, FileMode.Create)); 
+                    }
                 }
 
                 Employee newEmployee = new Employee
