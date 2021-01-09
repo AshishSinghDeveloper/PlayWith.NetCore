@@ -69,37 +69,43 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-
-                if(model.Photos != null && model.Photos.Count > 0)
-                {
-                    foreach (IFormFile photo in model.Photos)
-                    {
-                        //webHostingEnvironment.WebRootPath give the exact path of wwwroot folder
-                        string uploadsFolder = Path.Combine(webHostingEnvironment.WebRootPath, "images");
-                        uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
-                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                        // Use CopyTo() method provided by IFormFile interface to
-                        // copy the file to wwwroot/images folder
-                        photo.CopyTo(new FileStream(filePath, FileMode.Create)); 
-                    }
-                }
+                string uniqueFileName = ProcessUploadedFile(model);
 
                 Employee newEmployee = new Employee
                 {
                     Name = model.Name,
                     Email = model.Email,
                     Department = model.Department,
-                    // Store the file name in PhotoPath property of the employee object
-                    // which gets saved to the Employees database table
                     PhotoPath = uniqueFileName
                 };
 
                 _employeeRepository.Add(newEmployee);
-                return RedirectToAction("details", new { id = newEmployee.Id }); 
+                return RedirectToAction("details", new { id = newEmployee.Id });
             }
             return View();
+        }
+
+        private string ProcessUploadedFile(HomeCreateViewModel model)
+        {
+            string uniqueFileName = null;
+            if (model.Photos != null && model.Photos.Count > 0)
+            {
+                foreach (IFormFile photo in model.Photos)
+                {
+                    //webHostingEnvironment.WebRootPath give the exact path of wwwroot folder
+                    string uploadsFolder = Path.Combine(webHostingEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Use CopyTo() method provided by IFormFile interface to
+                    // copy the file to wwwroot/images folder
+                    using(var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        photo.CopyTo(fileStream);
+                    }
+                }
+            }
+            return uniqueFileName;
         }
 
         [HttpGet]
@@ -115,6 +121,31 @@ namespace EmployeeManagement.Controllers
                 ExistingPhotoPath = employee.PhotoPath,
             };
             return View(homeEditViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(HomeEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Employee employee = _employeeRepository.GetEmployeeById(model.Id);
+                employee.Department = model.Department;
+                employee.Email = model.Email;
+                employee.Name = model.Name;
+                if(model.Photos != null)
+                {
+                    if(model.ExistingPhotoPath != null)
+                    {
+                        string filePath = Path.Combine(webHostingEnvironment.WebRootPath, "images", model.ExistingPhotoPath);
+                        System.IO.File.Delete(filePath);
+                    }
+                    employee.PhotoPath = ProcessUploadedFile(model);
+                }
+                
+                _employeeRepository.Update(employee);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }
