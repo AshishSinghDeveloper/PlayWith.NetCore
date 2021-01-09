@@ -29,6 +29,7 @@ namespace EmployeeManagement.Controllers
 
         public ViewResult Details(int? id)
         {
+            #region Example of ViewData, ViewBag, and Strongly type Model
             //implement ViewData
             //Employee model = _employeeRepository.GetEmployeeById(1);
             //ViewData["Employee"] = model;
@@ -44,11 +45,18 @@ namespace EmployeeManagement.Controllers
             //implement strongly type model
             //Employee model = _employeeRepository.GetEmployeeById(1);
             //return View(model);
+            #endregion
 
-            //implement View Model: We create a "View Model" when a Model object does not contain all the data a view needs
+            var employee = _employeeRepository.GetEmployeeById(id.Value);
+            if(employee == null)
+            {
+                Response.StatusCode = 404;
+                return View("EmployeeNotFound", id.Value);
+            }
+
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                Employee = _employeeRepository.GetEmployeeById(id??1), //id??! means if id is not null then use id = 1
+                Employee = employee,
                 PageTitle = "Employee Details",
             };
             return View(homeDetailsViewModel);
