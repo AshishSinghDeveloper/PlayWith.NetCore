@@ -101,5 +101,20 @@ namespace EmployeeManagement.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            Employee employee = _employeeRepository.GetEmployeeById(id);
+            HomeEditViewModel homeEditViewModel = new HomeEditViewModel
+            {
+                Id = employee.Id,
+                Department = employee.Department,
+                Email = employee.Email,
+                Name = employee.Name,
+                ExistingPhotoPath = employee.PhotoPath,
+            };
+            return View(homeEditViewModel);
+        }
     }
 }
