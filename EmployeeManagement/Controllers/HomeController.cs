@@ -46,9 +46,6 @@ namespace EmployeeManagement.Controllers
             //Employee model = _employeeRepository.GetEmployeeById(1);
             //return View(model);
             #endregion
-
-            throw new Exception("Error in Details View");
-
             var employee = _employeeRepository.GetEmployeeById(id.Value);
             if(employee == null)
             {
