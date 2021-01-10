@@ -27,18 +27,17 @@
                 asp-fallback-src="~/lib/twitter-bootstrap/js/bootstrap.js"
                 asp-suppress-fallback-integrity="true">
         </script>
-
-        @*User-Defined*@
-        <link href="~/css/site.css" rel="stylesheet" />
-        <script src="~/js/CustomScript.js"></script>
     </environment>
     <environment include="Development">
         <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-        <link href="~/css/site.css" rel="stylesheet" />
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-        <script src="~/js/CustomScript.js"></script>
-    </environment> 
+    </environment>
+
+    @*User-Defined*@
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/js/CustomScript.js"></script>
+
     <title>@ViewBag.Title</title>
 </head>
 <body>
