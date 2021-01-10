@@ -6,6 +6,7 @@ using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,8 @@ namespace EmployeeManagement
         public void ConfigureServices(IServiceCollection services) //This is dependency injection container
         {
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
             #region Add MVC to this dependency Injection Container
             //services.AddMvcCore(); //This only included core methods of MVC and this is subset of MVCCore.
@@ -84,6 +87,7 @@ namespace EmployeeManagement
             #endregion
     
             app.UseStaticFiles();
+            app.UseAuthentication();
             //app.UseMvcWithDefaultRoute(); //add mvc middleware to the reqeuest pipeline with default route which is home/index/id
 
             //This is custom routing. Here id is optional field
