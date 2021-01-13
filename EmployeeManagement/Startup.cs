@@ -32,10 +32,12 @@ namespace EmployeeManagement
             services.AddIdentity<IdentityUser, IdentityRole>(option =>
             {
                 //Sets password requirement for Registering (Identity) user
-                option.Password.RequiredLength = 10;
-                option.Password.RequiredUniqueChars = 3;
-                option.Password.RequireDigit = true;
-                option.Password.RequireLowercase = true;              
+                option.Password.RequiredLength = 3;
+                option.Password.RequiredUniqueChars = 0;
+                option.Password.RequireDigit = false;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+                option.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<AppDbContext>();
 
             #region Add MVC to this dependency Injection Container
