@@ -29,7 +29,14 @@ namespace EmployeeManagement
         {
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(option =>
+            {
+                //Sets password requirement for Registering (Identity) user
+                option.Password.RequiredLength = 10;
+                option.Password.RequiredUniqueChars = 3;
+                option.Password.RequireDigit = true;
+                option.Password.RequireLowercase = true;              
+            }).AddEntityFrameworkStores<AppDbContext>();
 
             #region Add MVC to this dependency Injection Container
             //services.AddMvcCore(); //This only included core methods of MVC and this is subset of MVCCore.
