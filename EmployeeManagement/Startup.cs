@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +44,14 @@ namespace EmployeeManagement
 
             #region Add MVC to this dependency Injection Container
             //services.AddMvcCore(); //This only included core methods of MVC and this is subset of MVCCore.
-            services.AddMvc(options => options.EnableEndpointRouting = false); //AddMVC has all methods of MVC and it does internally call MVCCore. 
+            services.AddMvc(options => {
+                options.EnableEndpointRouting = false;
+
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }); 
      
             #endregion
 
@@ -102,7 +111,6 @@ namespace EmployeeManagement
             //This is custom routing. Here id is optional field
             app.UseMvc(routes =>
             {
-
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
 
